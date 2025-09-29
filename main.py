@@ -13,7 +13,7 @@ class Game:
 
         
 
-        self.screen = pygame.display.set_mode((1280,760))
+        self.screen = pygame.display.set_mode((640, 480))
         pygame.display.set_caption("The Ninja's Beginning")
         self.display = pygame.Surface((320, 240))
 
@@ -34,7 +34,7 @@ class Game:
             'background' :load_image('background.png'),
             'clouds' : load_images('clouds'),
             'player/idle' : Animation(load_images('entities/player/idle'), img_dur = 6),
-            'player/run' : Animation(load_images('entities/player/run'), img_dur=4),
+            'player/run' : Animation(load_images('entities/player/idle'), img_dur=4),
             'player/jump' : Animation(load_images('entities/player/jump')),
             'player/slide' : Animation(load_images('entities/player/slide')),
             'player/wall_slide' : Animation(load_images('entities/player/wall_slide')),
@@ -45,7 +45,7 @@ class Game:
 
         self.collision_area = pygame.Rect(50, 50, 300, 50)
 
-        self.player = Player(self, (100, 100), (16, 16))
+        self.player = Player(self,  (100, 100), (16, 16))
 
 
         self.tilemap = Tilemap(self, tile_size = 16)
