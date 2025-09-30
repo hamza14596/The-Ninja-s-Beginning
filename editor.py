@@ -37,8 +37,15 @@ class Editor:
 
         self.collision_area = pygame.Rect(50, 50, 300, 50)
 
-
         self.tilemap = Tilemap(self, tile_size = 16)
+
+        try:
+            self.tilemap.load('map.json')
+        except FileNotFoundError:
+            pass
+        
+      
+
 
         self.scroll = [0,0]
 
@@ -92,7 +99,11 @@ class Editor:
                 tile_loc = f"{tile_pos[0]};{tile_pos[1]}"
                 if tile_loc in self.tilemap.tilemap:
                     del self.tilemap.tilemap[tile_loc]
-
+                for tile in self.tilemap.offgrid_tiles.copy():
+                    tile_img = self.assets[tile['type']][tile['variant']]
+                    tile_r = pygame.Rect(tile['pos'][0] - self.scroll[0], tile['pos'][1] - self.scroll[1], tile_img.get_width(),tile_img.get_height())
+                    if tile_r.collidepoint(mpos):
+                        self.tilemap.offgrid_tiles.remove(tile)
           
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -141,6 +152,10 @@ class Editor:
                         self.movement[3] = True
                     if event.key == pygame.K_g:
                         self.ongrid = not self.ongrid
+                    if event.key == pygame.K_t:
+                        self.tilemap.autotile()
+                    if event.key == pygame.K_s:
+                        self.tilemap.save('map.json')
                     if event.key == pygame.K_LSHIFT:
                         self.shift = True
 
