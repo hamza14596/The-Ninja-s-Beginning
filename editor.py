@@ -30,6 +30,7 @@ class Editor:
             'grass' : load_images('tiles/grass'),
             'large_decor' : load_images('tiles/large_decor'),
             'stone' : load_images('tiles/stone'),
+            'spawner' :load_images('tiles/spawners')
         }
 
         self.movement = [False,False,False,False]
@@ -54,7 +55,7 @@ class Editor:
         self.tile_variant = 0
 
         self.clicking = False
-        self.right_clicking = True
+        self.right_clicking = False
         self.shift = False
         self.ongrid = True
 
