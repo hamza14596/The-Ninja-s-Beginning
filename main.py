@@ -41,6 +41,8 @@ class Game:
             'player/slide' : Animation(load_images('entities/player/slide')),
             'player/wall_slide' : Animation(load_images('entities/player/wall_slide')),
             'particle/leaf' : Animation(load_images('particles/leaf'),img_dur= 20, loop= False),
+            'particle/leaf' : Animation(load_images('particles/leaf'),img_dur= 20, loop= False),
+            'particle/particle' : Animation(load_images('particles/particle'),img_dur= 6, loop= False),
 
         }
 
@@ -49,7 +51,7 @@ class Game:
 
         self.collision_area = pygame.Rect(50, 50, 300, 50)
 
-        self.player = Player(self,  (100, 100), (16, 16))
+        self.player = Player(self,  (100, 100), (8, 16))
 
 
         self.tilemap = Tilemap(self, tile_size = 16)
@@ -58,6 +60,8 @@ class Game:
         self.leaf_spawners = []
         for tree in self.tilemap.extract([('large_decor', 2)], keep = True):
             self.leaf_spawners.append(pygame.Rect(4 + tree['pos'][0], 4 + tree['pos'][1], 23, 13))
+
+    
         
         self.particles = []
 
@@ -107,7 +111,10 @@ class Game:
                     if event.key == pygame.K_RIGHT:
                         self.movement[1] = True
                     if event.key == pygame.K_UP:
-                        self.player.velocity[1] = -3
+                        self.player.jump()
+                    if event.key == pygame.K_x:
+                        self.player.dash()
+
 
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_LEFT:
